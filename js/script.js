@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Load general deals from the second tab
 async function loadGeneralDeals() {
-  const response = await fetch("https://docs.google.com/spreadsheets/d/1a7C4wGcUABmf9ZTkrBdbR-XnYZolbO7C539FEq6V1AA/edit?usp=drivesdk");
+  const response = await fetch("https://docs.google.com/spreadsheets/d/1pNz5I_5FnDcHTY2tsc30GBHMlDPZfIrCrUZge3Q2VK0/gviz/tq?tqx=out:json&gid=REPLACE_WITH_YOUR_GID");
   const text = await response.text();
   const json = JSON.parse(text.substr(47).slice(0, -2));
   const rows = json.table.rows;
@@ -98,5 +98,19 @@ document.addEventListener("DOMContentLoaded", () => {
     loadDeals();
   } else if (window.location.pathname.includes("deals.html")) {
     loadGeneralDeals();
+  }
+});
+
+
+// Toggle sidebar menu
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("menu-toggle");
+  const sidebar = document.getElementById("sidebar");
+
+  if (toggle && sidebar) {
+    toggle.addEventListener("click", () => {
+      sidebar.classList.toggle("hidden");
+      sidebar.classList.toggle("open");
+    });
   }
 });
