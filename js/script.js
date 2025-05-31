@@ -1,116 +1,136 @@
-
-// js/script.js
 document.addEventListener('DOMContentLoaded', () => {
-    // Load header and footer
-    async function loadHTML(filePath, elementId, callback) {
-        try {
-            const response = await fetch(filePath);
-            const text = await response.text();
-            const element = document.getElementById(elementId);
-            if (element) {
-                element.innerHTML = text;
-                if (callback) callback();
-            }
-        } catch (error) {
-            console.error('Error loading HTML:', error);
-        }
+  const body = document.body;
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+  const navUl = document.querySelector('header nav ul');
+  
+  // --- Theme Management ---
+  const applyTheme = (theme) => {
+    if (theme === 'light') {
+      body.classList.add('light-mode');
+      if (themeToggleBtn) themeToggleBtn.innerHTML = `<img src="assets/icons/moon.svg" alt="Dark Mode">`;
+    } else {
+      body.classList.remove('light-mode');
+      if (themeToggleBtn) themeToggleBtn.innerHTML = `<img src="assets/icons/sun.svg" alt="Light Mode">`;
     }
-
-    if (document.getElementById('header-placeholder')) {
-        loadHTML('header.html', 'header-placeholder');
-    }
-    if (document.getElementById('footer-placeholder')) {
-        loadHTML('footer.html', 'footer-placeholder');
-    }
-
-    // Google Sheet integration with styled layout
-    async function loadDeals() {
-        const response = await fetch("https://docs.google.com/spreadsheets/d/1pNz5I_5FnDcHTY2tsc30GBHMlDPZfIrCrUZge3Q2VK0/gviz/tq?tqx=out:json");
-        const text = await response.text();
-        const json = JSON.parse(text.substr(47).slice(0, -2));
-        const rows = json.table.rows;
-
-        const container = document.getElementById("deal-container");
-        container.innerHTML = "";
-
-        rows.forEach(row => {
-            const title = row.c[0]?.v || "";
-            const desc = row.c[1]?.v || "";
-            const img = row.c[2]?.v || "https://via.placeholder.com/400x300";
-            const brand = row.c[3]?.v || "Savify Deal";
-            const link = row.c[4]?.v || "#";
-
-            const card = document.createElement("div");
-            card.className = "deal-card animate-on-scroll";
-            card.innerHTML = `
-                <img src="${img}" alt="${title}" class="deal-img" />
-                <div class="deal-card-content">
-                    <span class="brand">${brand}</span>
-                    <h3>${title}</h3>
-                    <p class="description">${desc}</p>
-                    <a href="${link}" target="_blank" class="btn btn-primary">Get Deal</a>
-                </div>
-            `;
-            container.appendChild(card);
-        });
-    }
-
-    // Run once DOM is fully loaded
-    loadDeals();
-});
-
-
-// Load general deals from the second tab
-async function loadGeneralDeals() {
-  const response = await fetch("https://docs.google.com/spreadsheets/d/1pNz5I_5FnDcHTY2tsc30GBHMlDPZfIrCrUZge3Q2VK0/gviz/tq?tqx=out:json&gid=REPLACE_WITH_YOUR_GID");
-  const text = await response.text();
-  const json = JSON.parse(text.substr(47).slice(0, -2));
-  const rows = json.table.rows;
-
-  const container = document.getElementById("deal-container");
-  container.innerHTML = "";
-
-  rows.forEach(row => {
-    const title = row.c[0]?.v || "";
-    const desc = row.c[1]?.v || "";
-    const img = row.c[2]?.v || "https://via.placeholder.com/400x300";
-    const brand = row.c[3]?.v || "Savify Deal";
-    const link = row.c[4]?.v || "#";
-
-    const card = document.createElement("div");
-    card.className = "deal-card";
-    card.innerHTML = `
-      <img src="${img}" alt="${title}" class="deal-img" />
-      <div class="deal-card-content">
-        <span class="brand">${brand}</span>
-        <h3>${title}</h3>
-        <p class="description">${desc}</p>
-        <a href="${link}" target="_blank" class="btn btn-primary">Get Deal</a>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// Load the appropriate function depending on the page
-document.addEventListener("DOMContentLoaded", () => {
-  if (window.location.pathname.includes("student.html")) {
-    loadDeals();
-  } else if (window.location.pathname.includes("deals.html")) {
-    loadGeneralDeals();
+  };
+  
+  const toggleTheme = () => {
+    const currentThemeIsLight = body.classList.contains('light-mode');
+    const newTheme = currentThemeIsLight ? 'dark' : 'light';
+    localStorage.setItem('theme', newTheme);
+    applyTheme(newTheme);
+  };
+  
+  // Load saved theme or default
+  const savedTheme = localStorage.getItem('theme') || (localStorage.getItem('defaultThemeMode') || 'dark');
+  applyTheme(savedTheme);
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', toggleTheme);
   }
-});
-
-
-// Toggle sidebar menu
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.getElementById("menu-toggle");
-  const sidebar = document.getElementById("sidebar");
-
-  if (toggle && sidebar) {
-    toggle.addEventListener("click", () => {
-      sidebar.classList.toggle("hidden");
-      sidebar.classList.toggle("open");
+  
+  // Apply custom primary color
+  const savedPrimaryColor = localStorage.getItem('primaryThemeColor');
+  if (savedPrimaryColor) {
+    document.documentElement.style.setProperty('--primary-color', savedPrimaryColor);
+  }
+  
+  
+  // --- Mobile Menu ---
+  if (mobileMenuIcon && navUl) {
+    mobileMenuIcon.addEventListener('click', () => {
+      navUl.classList.toggle('active');
     });
   }
+  
+  // --- Active Nav Link ---
+  const currentPath = window.location.pathname.split("/").pop() || "index.html";
+  const navLinks = document.querySelectorAll('header nav ul li a');
+  navLinks.forEach(link => {
+    if (link.getAttribute('href') === currentPath) {
+      link.classList.add('active');
+    }
+  });
+  
+  
+  // --- Deal Fetching and Display ---
+  const dealsContainer = document.getElementById('deals-grid');
+  const placeholderImage = 'assets/images/placeholder-deal.png';
+  
+  async function fetchAndDisplayDeals(sheetUrl, container) {
+    if (!container) return;
+    container.innerHTML = '<p>Loading deals...</p>'; // Loading message
+    
+    try {
+      const response = await fetch(sheetUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const csvData = await response.text();
+      const deals = parseCSV(csvData);
+      
+      container.innerHTML = ''; // Clear loading message
+      if (deals.length === 0) {
+        container.innerHTML = '<p>No deals available at the moment. Check back soon!</p>';
+        return;
+      }
+      
+      deals.forEach(deal => {
+        const dealCard = `
+                    <div class="deal-card">
+                        <img src="${deal.image || placeholderImage}" alt="${deal.title}" class="deal-card-image" onerror="this.onerror=null;this.src='${placeholderImage}';">
+                        <div class="deal-card-content">
+                            <h3>${deal.title || 'Untitled Deal'}</h3>
+                            <p>${deal.description || 'No description available.'}</p>
+                            <a href="${deal.link}" target="_blank" rel="noopener noreferrer" class="deal-button">Get Deal</a>
+                        </div>
+                    </div>
+                `;
+        container.insertAdjacentHTML('beforeend', dealCard);
+      });
+      
+    } catch (error) {
+      console.error('Error fetching deals:', error);
+      container.innerHTML = '<p>Sorry, we couldn\'t load the deals right now. Please try again later.</p>';
+    }
+  }
+  
+  function parseCSV(csvText) {
+    const rows = csvText.trim().split('\n');
+    const dealsArray = [];
+    // Skip header row (rows[0])
+    for (let i = 1; i < rows.length; i++) {
+      const columns = rows[i].split(',');
+      if (columns.length >= 4) { // Expecting Image, Title, Description, Link
+        dealsArray.push({
+          image: columns[0] ? columns[0].trim() : '',
+          title: columns[1] ? columns[1].trim() : '',
+          description: columns[2] ? columns[2].trim() : '',
+          link: columns[3] ? columns[3].trim() : ''
+          // Add more columns if your sheet has them
+        });
+      }
+    }
+    return dealsArray;
+  }
+  
+  // --- Page Specific Logic ---
+  const studentSheetUrl = 'https://docs.google.com/spreadsheets/d/1pNz5I_5FnDcHTY2tsc30GBHMlDPZfIrCrUZge3Q2VK0/edit?usp=drivesdk'; // REPLACE THIS
+  const generalSheetUrl = 'https://docs.google.com/spreadsheets/d/1a7C4wGcUABmf9ZTkrBdbR-XnYZolbO7C539FEq6V1AA/edit?usp=drivesdk'; // REPLACE THIS
+  
+  if (document.getElementById('student-deals-grid')) {
+    fetchAndDisplayDeals(studentSheetUrl, document.getElementById('student-deals-grid'));
+  }
+  if (document.getElementById('general-deals-grid')) {
+    fetchAndDisplayDeals(generalSheetUrl, document.getElementById('general-deals-grid'));
+  }
+  
+  // Expose for admin page if needed (though admin.js will have its own)
+  window.SavifyApp = {
+    fetchAndDisplayDeals,
+    parseCSV,
+    placeholderImage,
+    studentSheetUrl,
+    generalSheetUrl
+  };
 });

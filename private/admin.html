@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--
+        Option 1: Link to your LIVE public style.css for base styles (Recommended for consistency)
+        <link rel="stylesheet" href="https://YOUR_USERNAME.github.io/savify-public/css/style.css">
+    -->
+    <!-- Option 2: Or, if you have a local copy of the public style.css for the admin panel -->
+    <!-- <link rel="stylesheet" href="css/public-style-copy.css"> -->
+
+    <link rel="stylesheet" href="admin.css"> <!-- Admin-specific styles -->
+    <title>Savify Admin Panel (Local)</title>
+</head>
+<body class="admin-body"> <!-- Add class for potential body-specific admin styling -->
+
+    <header class="admin-header">
+        <div class="admin-logo">Savify Admin</div>
+        <nav class="admin-nav">
+            <ul>
+                <!-- Update these hrefs to your LIVE public site -->
+                <li><a href="https://YOUR_USERNAME.github.io/savify-public/index.html" target="_blank">View Site Home</a></li>
+                <li><a href="https://YOUR_USERNAME.github.io/savify-public/student.html" target="_blank">View Student Deals</a></li>
+                <li><a href="https://YOUR_USERNAME.github.io/savify-public/deals.html" target="_blank">View General Deals</a></li>
+            </ul>
+        </nav>
+        <div class="admin-theme-toggle-container">
+             <!-- Theme toggle can be re-added if admin.js handles its localStorage aspect
+                  and admin.css styles it appropriately. For simplicity, omitting for now.
+                  If re-added, it would set localStorage for the public site to read.
+            <button id="admin-theme-toggle" class="admin-theme-toggle-btn" aria-label="Toggle theme">
+                <img src="assets/icons/sun.svg" alt="Light Mode">
+            </button>
+            -->
+        </div>
+    </header>
+
+    <main id="admin-dashboard" class="admin-dashboard-container">
+        <h1>Admin Dashboard</h1>
+
+        <section class="admin-panel-section">
+            <h2>Theme Customization</h2>
+            <form id="theme-settings-form" class="admin-panel-form">
+                <div>
+                    <label for="primary-color-picker">Primary Theme Color:</label>
+                    <div class="color-picker-input-group">
+                        <input type="color" id="primary-color-picker" value="#6200ea">
+                        <input type="text" id="primary-color-hex" placeholder="#6200ea">
+                    </div>
+                </div>
+                <div>
+                    <label for="default-theme-mode">Default Site Theme Mode (for new visitors):</label>
+                    <select id="default-theme-mode">
+                        <option value="dark">Dark Mode</option>
+                        <option value="light">Light Mode</option>
+                    </select>
+                </div>
+                <button type="submit">Save Theme Settings</button>
+            </form>
+        </section>
+
+        <section class="admin-panel-section">
+            <h2>Manage Deals (Manual Google Sheet Update)</h2>
+            <p class="admin-instructions">
+                Use the form below to generate CSV data. You will then need to manually update your Google Sheets.
+                <br>Student Sheet: <a href="YOUR_STUDENT_SHEET_EDIT_URL" target="_blank">Edit Student Deals Sheet</a>
+                <br>General Sheet: <a href="YOUR_GENERAL_SHEET_EDIT_URL" target="_blank">Edit General Deals Sheet</a>
+            </p>
+
+            <div id="deal-management-form-container">
+                <h3>Add / Prepare Edit Data for Deal</h3>
+                <form id="admin-deal-form" class="admin-panel-form">
+                    <input type="hidden" id="deal-original-index" value="-1">
+                    <input type="hidden" id="deal-sheet-type" value="general">
+                    <div>
+                        <label for="deal-image">Image URL:</label>
+                        <input type="url" id="deal-image" placeholder="https://example.com/image.png" required>
+                    </div>
+                    <div>
+                        <label for="deal-title">Title:</label>
+                        <input type="text" id="deal-title" placeholder="Awesome Deal Title" required>
+                    </div>
+                    <div>
+                        <label for="deal-description">Description:</label>
+                        <textarea id="deal-description" placeholder="Brief description of the deal." required></textarea>
+                    </div>
+                    <div>
+                        <label for="deal-link">Deal Link URL:</label>
+                        <input type="url" id="deal-link" placeholder="https://product.com/offer" required>
+                    </div>
+                    <div class="admin-form-actions">
+                        <button type="submit" id="save-deal-btn">Generate CSV Row for New Deal</button>
+                        <button type="button" id="clear-deal-form-btn">Clear Form</button>
+                    </div>
+                </form>
+                <div id="manual-update-instructions" style="display:none;"></div>
+            </div>
+        </section>
+
+        <section class="admin-panel-section">
+            <h2>View Existing Deals (for reference)</h2>
+            <div class="admin-view-tabs">
+                <button class="admin-tab-button active" data-target="admin-student-deals-view">Student Deals</button>
+                <button class="admin-tab-button" data-target="admin-general-deals-view">General Deals</button>
+            </div>
+
+            <div id="admin-student-deals-view" class="admin-deals-view-content active">
+                <h3>Student Deals (from Sheet)</h3>
+                <div id="admin-student-deals-list" class="admin-deals-grid">
+                    <!-- Deals loaded by JS -->
+                </div>
+            </div>
+            <div id="admin-general-deals-view" class="admin-deals-view-content">
+                <h3>General Deals (from Sheet)</h3>
+                <div id="admin-general-deals-list" class="admin-deals-grid">
+                    <!-- Deals loaded by JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="admin-footer">
+        <p>Savify Local Admin Panel | © <span id="currentYear"></span> Your Name/Brand</p>
+    </footer>
+
+    <!--
+        IMPORTANT: Decide how admin.js gets access to sheet URLs and parseCSV
+        Option 1: Link to your LIVE public script.js (if it exposes SavifyApp global)
+                   Make sure this script is loaded *before* admin.js
+        <script src="https://YOUR_USERNAME.github.io/savify-public/js/script.js"></script>
+    -->
+    <script src="admin.js"></script>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+/* admin.css - Styles for the local Savify Admin Panel */
+
+/* --- Base Variables & Reset (Simplified for Admin) --- */
+:root {
+    --admin-primary-color: #4a148c; /* Admin Purple */
+    --admin-primary-variant: #38006b;
+    --admin-secondary-color: #00bfa5; /* Admin Teal */
+
+    /* Dark Mode Defaults for Admin */
+    --admin-bg-color: #1e1e1e;
+    --admin-surface-color: #2c2c2c;
+    --admin-text-color: #e0e0e0;
+    --admin-muted-text-color: #aaaaaa;
+    --admin-border-color: #444444;
+    --admin-button-text-color: #ffffff;
+
+    --admin-header-height: 55px;
+    --admin-border-radius: 6px;
+    --admin-box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/*
+body.light-mode { // If you implement a theme toggle for the admin panel itself
+    --admin-bg-color: #f0f2f5;
+    --admin-surface-color: #ffffff;
+    --admin-text-color: #333333;
+    --admin-muted-text-color: #666666;
+    --admin-border-color: #dddddd;
+    --admin-button-text-color: #ffffff;
+    --admin-box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.admin-body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--admin-bg-color);
+    color: var(--admin-text-color);
+    line-height: 1.6;
+    padding-top: var(--admin-header-height);
+}
+
+a {
+    color: var(--admin-secondary-color);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* --- Admin Header --- */
+.admin-header {
+    background-color: var(--admin-surface-color);
+    color: var(--admin-text-color);
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--admin-header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--admin-box-shadow);
+    z-index: 1000;
+    border-bottom: 1px solid var(--admin-border-color);
+}
+
+.admin-logo {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--admin-primary-color);
+}
+
+.admin-nav ul {
+    list-style: none;
+    display: flex;
+}
+.admin-nav ul li {
+    margin-left: 15px;
+}
+.admin-nav ul li a {
+    color: var(--admin-text-color);
+    font-weight: 500;
+    padding: 5px 0;
+}
+.admin-nav ul li a:hover {
+    color: var(--admin-secondary-color);
+}
+
+/* --- Admin Dashboard Container & Sections --- */
+.admin-dashboard-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.admin-dashboard-container h1 {
+    font-size: 2em;
+    color: var(--admin-primary-color);
+    margin-bottom: 25px;
+    text-align: center;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--admin-primary-color);
+}
+
+.admin-panel-section {
+    background-color: var(--admin-surface-color);
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: var(--admin-border-radius);
+    box-shadow: var(--admin-box-shadow);
+    border: 1px solid var(--admin-border-color);
+}
+
+.admin-panel-section h2 {
+    font-size: 1.5em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--admin-text-color);
+    border-bottom: 1px solid var(--admin-border-color);
+    padding-bottom: 10px;
+}
+
+.admin-instructions {
+    font-size: 0.9em;
+    color: var(--admin-muted-text-color);
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+.admin-instructions a {
+    font-weight: 500;
+}
+
+
+/* --- Admin Forms --- */
+.admin-panel-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    font-size: 0.95em;
+}
+
+.admin-panel-form input[type="text"],
+.admin-panel-form input[type="url"],
+.admin-panel-form input[type="color"],
+.admin-panel-form textarea,
+.admin-panel-form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--admin-border-color);
+    border-radius: var(--admin-border-radius);
+    background-color: var(--admin-bg-color);
+    color: var(--admin-text-color);
+    font-size: 1em;
+}
+.admin-panel-form input[type="color"] {
+    padding: 2px; /* Slight adjustment for color input */
+    height: 40px;
+}
+.admin-panel-form textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+.admin-panel-form select {
+    appearance: none; /* For custom select arrow if desired */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 10px auto;
+    padding-right: 30px; /* Space for arrow */
+}
+
+
+.admin-panel-form input:focus,
+.admin-panel-form textarea:focus,
+.admin-panel-form select:focus {
+    outline: none;
+    border-color: var(--admin-primary-color);
+    box-shadow: 0 0 0 2px rgba(74, 20, 140, 0.3); /* Corresponds to --admin-primary-color */
+}
+
+.color-picker-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+#primary-color-hex {
+    flex-grow: 1;
+}
+#primary-color-picker {
+    width: 60px; /* Fixed width for color swatch */
+    flex-shrink: 0;
+}
+
+.admin-panel-form button {
+    background-color: var(--admin-primary-color);
+    color: var(--admin-button-text-color);
+    padding: 10px 18px;
+    border: none;
+    border-radius: var(--admin-border-radius);
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+.admin-panel-form button:hover {
+    background-color: var(--admin-primary-variant);
+}
+.admin-panel-form button[type="button"] { /* Clear button */
+    background-color: var(--admin-muted-text-color);
+    color: var(--admin-bg-color);
+}
+.admin-panel-form button[type="button"]:hover {
+    background-color: #888888;
+}
+
+.admin-form-actions {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+
+/* --- Manual Update Instructions --- */
+#manual-update-instructions {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--admin-bg-color);
+    border: 1px dashed var(--admin-secondary-color);
+    border-radius: var(--admin-border-radius);
+    color: var(--admin-text-color);
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 0.9em;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+/* --- Admin View Deals Tabs & Grid --- */
+.admin-view-tabs {
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--admin-border-color);
+}
+.admin-tab-button {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--admin-muted-text-color);
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    margin-right: 5px;
+}
+.admin-tab-button.active,
+.admin-tab-button:hover {
+    color: var(--admin-primary-color);
+    border-bottom-color: var(--admin-primary-color);
+}
+
+.admin-deals-view-content {
+    display: none;
+}
+.admin-deals-view-content.active {
+    display: block;
+}
+
+.admin-deals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.admin-deal-card { /* Renamed to avoid conflict if public style.css is also loaded */
+    background-color: var(--admin-surface-color);
+    border-radius: var(--admin-border-radius);
+    border: 1px solid var(--admin-border-color);
+    box-shadow: var(--admin-box-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.admin-deal-card-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    background-color: #333; /* Dark placeholder */
+}
+.admin-deal-card-content {
+    padding: 12px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+.admin-deal-card-content h3 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+    color: var(--admin-text-color);
+}
+.admin-deal-card-content p {
+    font-size: 0.85em;
+    color: var(--admin-muted-text-color);
+    margin-bottom: 12px;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Limit to 3 lines */
+    -webkit-box-orient: vertical;
+}
+.admin-deal-card-actions {
+    margin-top: auto; /* Pushes to bottom */
+    display: flex;
+    gap: 8px;
+}
+.admin-deal-card-actions .admin-button-icon {
+    background: none;
+    border: 1px solid var(--admin-muted-text-color);
+    border-radius: var(--admin-border-radius);
+    padding: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.admin-deal-card-actions .admin-button-icon svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--admin-muted-text-color);
+}
+.admin-deal-card-actions .admin-button-icon:hover {
+    border-color: var(--admin-secondary-color);
+}
+.admin-deal-card-actions .admin-button-icon:hover svg {
+    fill: var(--admin-secondary-color);
+}
+.admin-deal-card .deal-link-button { /* Specific button for viewing deal link */
+    display: block;
+    background-color: var(--admin-secondary-color);
+    color: var(--admin-bg-color);
+    text-align: center;
+    padding: 8px;
+    border-radius: var(--admin-border-radius);
+    font-weight: 500;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+.admin-deal-card .deal-link-button:hover {
+    background-color: #00a383; /* Darker teal */
+    text-decoration: none;
+}
+
+
+/* --- Admin Footer --- */
+.admin-footer {
+    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+    background-color: var(--admin-surface-color);
+    color: var(--admin-muted-text-color);
+    border-top: 1px solid var(--admin-border-color);
+    font-size: 0.85em;
+}
