@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Google Sheet integration with styled layout
     async function loadDeals() {
-        const response = await fetch("https://docs.google.com/spreadsheets/d/1pNz5I_5FnDcHTY2tsc30GBHMlDPZfIrCrUZge3Q2VK0/gviz/tq?tqx=out:json");
+        const response = await fetch("https://docs.google.com/spreadsheets/d/1a7C4wGcUABmf9ZTkrBdbR-XnYZolbO7C539FEq6V1AA/edit?usp=drivesdk");
         const text = await response.text();
         const json = JSON.parse(text.substr(47).slice(0, -2));
         const rows = json.table.rows;
