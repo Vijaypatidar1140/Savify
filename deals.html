@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Deals - Savify</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%23FF6B6B%22/><text y=%22.9em%22 font-size=%2290%22 x=%2250%%22 text-anchor=%22middle%22 fill=%22white%22>S</text></svg>">
+</head>
+<body>
+    <div class="site-wrapper">
+        <div id="header-placeholder"></div>
+
+        <main class="main-content">
+            <section class="section animate-on-load">
+                <div class="container">
+                    <h1>General Deals for Everyone</h1>
+                    <p>Discover a wide variety of deals across different categories. Happy saving!</p>
+
+                    <!-- Filters -->
+                    <div class="filters animate-on-load delay-1">
+                        <button class="btn active" data-filter="all">All</button>
+                        <button class="btn" data-filter="fashion">Fashion</button>
+                        <button class="btn" data-filter="tech">Tech</button>
+                        <button class="btn" data-filter="travel">Travel</button>
+                        <button class="btn" data-filter="food">Food</button>
+                        <button class="btn" data-filter="home">Home</button>
+                    </div>
+
+                    <div class="deal-grid">
+                        <!-- Deal Card 1 (Tech) -->
+                        <div class="deal-card animate-on-scroll" data-category="tech">
+                            <img src="assets/images/deal-placeholder-1.jpg" alt="Tech Deal">
+                            <div class="deal-card-content">
+                                <span class="brand">Gadget World</span>
+                                <h3>30% Off Smartwatches</h3>
+                                <p class="description">Latest smartwatches with fitness tracking and more, now at a discount.</p>
+                                <a href="#" class="btn btn-primary">Get Deal</a>
+                            </div>
+                        </div>
+                        <!-- Deal Card 2 (Fashion) -->
+                        <div class="deal-card animate-on-scroll" data-category="fashion">
+                            <img src="assets/images/deal-placeholder-2.jpg" alt="Fashion Deal">
+                            <div class="deal-card-content">
+                                <span class="brand">Chic Apparel</span>
+                                <h3>Buy One Get One 50% Off</h3>
+                                <p class="description">Mix and match your favorite styles from our new collection.</p>
+                                <a href="#" class="btn btn-primary">Get Deal</a>
+                            </div>
+                        </div>
+                        <!-- Deal Card 3 (Travel) -->
+                        <div class="deal-card animate-on-scroll" data-category="travel">
+                            <img src="assets/images/deal-placeholder-3.jpg" alt="Travel Deal">
+                            <div class="deal-card-content">
+                                <span class="brand">Adventure Tours</span>
+                                <h3>Weekend Getaway Package $199</h3>
+                                <p class="description">Explore scenic destinations with our all-inclusive weekend package.</p>
+                                <a href="#" class="btn btn-primary">Get Deal</a>
+                            </div>
+                        </div>
+                        <!-- Deal Card 4 (Food) -->
+                        <div class="deal-card animate-on-scroll" data-category="food">
+                            <img src="assets/images/deal-placeholder-4.jpg" alt="Food Deal">
+                            <div class="deal-card-content">
+                                <span class="brand">Gourmet Pizza Co.</span>
+                                <h3>Two Large Pizzas for $25</h3>
+                                <p class="description">Perfect for a family dinner or a night in with friends.</p>
+                                <a href="#" class="btn btn-primary">Get Deal</a>
+                            </div>
+                        </div>
+                        <!-- Deal Card 5 (Tech) -->
+                        <div class="deal-card animate-on-scroll" data-category="tech">
+                            <img src="assets/images/deal-placeholder-5.jpg" alt="Tech Deal">
+                            <div class="deal-card-content">
+                                <span class="brand">SoundWave Audio</span>
+                                <h3>20% Off Bluetooth Speakers</h3>
+                                <p class="description">Portable and powerful Bluetooth speakers for music on the go.</p>
+                                <a href="#" class="btn btn-primary">Get Deal</a>
+                            </div>
+                        </div>
+                        <!-- Deal Card 6 (Home) -->
+                        <div class="deal-card animate-on-scroll" data-category="home">
+                            <img src="assets/images/deal-placeholder-6.jpg" alt="Home Deal">
+                            <div class="deal-card-content">
+                                <span class="brand">Cozy Living</span>
+                                <h3>15% Off Home Decor</h3>
+                                <p class="description">Spruce up your living space with stylish home decor items.</p>
+                                <a href="#" class="btn btn-primary">Get Deal</a>
+                            </div>
+                        </div>
+                         <!-- Deal Card 7 (Fashion) -->
+                        <div class="deal-card animate-on-scroll" data-category="fashion">
+                            <img src="assets/images/deal-placeholder-1.jpg" alt="Fashion Deal">
+                            <div class="deal-card-content">
+                                <span class="brand">Urban Kicks</span>
+                                <h3>Limited Edition Sneakers Drop</h3>
+                                <p class="description">Exclusive access to new sneaker releases with a special launch discount.</p>
+                                <a href="#" class="btn btn-primary">Get Deal</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div id="footer-placeholder"></div>
+        </main>
+    </div>
+    <script src="js/script.js"></script>
+
+<!-- Dynamic Deal Section -->
+<div id="deal-container" class="deal-section">
+  <p>Loading deals...</p>
+</div>
+
+</body>
+</html>
